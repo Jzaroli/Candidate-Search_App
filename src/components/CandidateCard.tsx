@@ -37,10 +37,11 @@ const styles = {
 }
 
 type CandidateCardProps = {
-    user: string;    
+    user: string;
+    sendDataToParent: (data: any) => void;    
 }
 
-const CandidateCard = ({ user }: CandidateCardProps) => {
+const CandidateCard = ({ user, sendDataToParent }: CandidateCardProps) => {
     // console.log('this is the user type:', typeof user)
     const [currentCandidate, setCurrentCandidate] = useState<Candidate>({
         login: '',
@@ -80,6 +81,10 @@ const CandidateCard = ({ user }: CandidateCardProps) => {
             searchCandidateByUser(user); // Pass the `user` prop as the username
         // }
     }, [user]);
+
+    useEffect(() => {
+        sendDataToParent(currentCandidate);
+      }, [currentCandidate]);
 
     return (
         <>
