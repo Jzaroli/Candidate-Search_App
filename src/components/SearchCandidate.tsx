@@ -5,35 +5,33 @@ import Candidate from '../interfaces/Candidate.interface'
 import minus from '../assets/images/minus.jpg';
 import plus from '../assets/images/plus.jpg';
 
-
 const styles = {
     div: {
         display: 'flex',
         justifyContent: 'space-between',        
         width: '20vw',
+        marginTop: '1vw'
     },
     btn: {
-        margin: '0',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: 'transparent',
-        marginTop: '0.5vw',
+        borderRadius: '50%',
         width: '6vw',
         height: '6vw',
-        padding: '0.2vw'   
+        margin: '0',
+        padding: '0',
+        border: 'none',
+        overflow: 'hidden',   
     },
     image: {
         borderRadius: '50%',
-        width: '4vw',
-        height: '4vw',
+        width: '6vw',
+        height: '6vw',
         margin: '0',
-        padding: '0.1vw' 
-    },
-    btn2: {
-        borderRadius: '50%',
-        marginTop: '1vw',
-        fontWeight: 'bold'
     }
 }
-
 
 function SearchCandidate() {
     //Stores searched username to be passed down to child component CandidateCard:
@@ -45,7 +43,6 @@ function SearchCandidate() {
     const searchCandidates = async () => {
         try {
             const data = await searchGithub();
-            
          if (data.length > 0) {  
             // console.log(data[0].login);
             setCandidate(data[0].login);
