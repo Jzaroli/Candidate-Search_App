@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { searchGithub  } from '../api/API';
 import CandidateCard from './CandidateCard';
+import Candidate from '../interfaces/Candidate.interface'
 import minus from '../assets/images/minus.jpg';
 import plus from '../assets/images/plus.jpg';
 
@@ -38,7 +39,7 @@ function SearchCandidate() {
     //Stores searched username to be passed down to child component CandidateCard:
     const [searchedCandidate, setCandidate] = useState<string>('');
     //Stores the full user's information in the parent components SearchCandidate, after being retrieved:
-    const [localChildData, setLocalData] = useState(null);
+    const [newCandidateData, setLocalData] = useState<Candidate | null>(null);
 
     //Searches for candidate and sets the username in state to be passed down to child component
     const searchCandidates = async () => {
@@ -63,16 +64,25 @@ function SearchCandidate() {
       };
     
     //Saves user information to local storage on click from green button:
-    const saveToLocalStorage = () => {
-    if (localChildData) {
-        localStorage.setItem("userData", JSON.stringify(localChildData));
-        console.log("Data saved to localStorage!");
-    } else {
-        console.log("No data to save!");
-    }
+    const saveToLocalStorage = (newCandidate: Candidate): void => {
+        
+        // Initializes variable as either a Candidate or an empty array to avoid errors.
+        let existingData: Candidate[] = [];
+        try {
+            const storedData = localStorage.getItem("candidates");
+            existingData = storedData ? JSON.parse(storedData) : [];
+        // catch sets existingData to empty array as a fall back:
+        } catch (error) {
+            console.error("Error parsing localStorage data. Reinitializing.", error);
+            existingData = [];
+        }
+        //Adds new candidate to existing data and sets information as array of objects in local storage:
+        const updatedData = [...existingData, newCandidate];
+        localStorage.setItem("candidates", JSON.stringify(updatedData));
+        console.log("Data saved to localStorage!", updatedData);
     };
 
-    // automatically searches for new candidate on page load:
+    //Automatically searches for new candidate on page load:
     useEffect(() => {
         searchCandidates();
     }, []);
@@ -83,7 +93,13 @@ function SearchCandidate() {
             <CandidateCard user= {searchedCandidate} sendDataToParent={handleDataFromChild}  />
             <div style={styles.div}>
             <button style={styles.btn} onClick={searchCandidates}><img style={styles.image} src={minus}/></button> 
-            <button style={styles.btn} onClick={saveToLocalStorage}><img style={styles.image} src={plus}/></button> 
+            <button style={styles.btn} onClick={() => { 
+                if (newCandidateData) {
+                    saveToLocalStorage(newCandidateData);
+                  } else {
+                    console.log("No candidate data to save!");
+                  }
+                }}><img style={styles.image} src={plus}/></button> 
             </div>
         </section>
         
@@ -92,28 +108,3 @@ function SearchCandidate() {
 }
 
 export default SearchCandidate;
-
-//EVENT code:
-    // event.preventDefault();
-    // event: React.MouseEvent
-    // <button onClick={searchCandidates}>Submit</button> 
-    // <section>
-    //     {searchedCandidate ? <p>{searchedCandidate}</p> : null}
-    // </section>
- 
-    // const [currentCandidate, setCurrentCandidate] = useState<Candidate>({
-    //     login: '',
-    //     avatar_url: '',
-    //     location: '',
-    //     email: '',
-    //     company: '',
-    //     bio: '',
-    //   });
-
-    //   const searchCandidateByUn = async (event: FormEvent, candidate_username: string) => { //need to define event in html
-    //     event.preventDefault();
-    //     const data: Candidate = await searchGithubUser(candidate_username);
-    
-    //     setCurrentCandidate(data);
-    //     console.log(currentCandidate.location)
-    //   };
