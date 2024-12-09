@@ -78,7 +78,11 @@ const CandidateCard = ({ user, sendDataToParent }: CandidateCardProps) => {
 
     //Automically calls the user information retrieval function:
     useEffect(() => {
-            searchCandidateByUser(user); // Pass the `user` prop as the username
+        if (!user) {
+            console.log ('No initial candidate to render');
+            return;
+        }
+        searchCandidateByUser(user); // Pass the `user` prop as the username
     }, [user]);
 
     //Sends user information back to parent

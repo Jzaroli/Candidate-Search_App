@@ -47,7 +47,7 @@ function SearchCandidate() {
             const data = await searchGithub();
             
          if (data.length > 0) {  
-            console.log(data[0].login);
+            // console.log(data[0].login);
             setCandidate(data[0].login);
             console.log('Found Candidates');
         } else {
