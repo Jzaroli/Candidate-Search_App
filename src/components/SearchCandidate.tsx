@@ -93,6 +93,7 @@ function SearchCandidate() {
             <button style={styles.btn} onClick={() => { 
                 if (newCandidateData) {
                     saveToLocalStorage(newCandidateData);
+                    searchCandidates();
                   } else {
                     console.log("No candidate data to save!");
                   }
