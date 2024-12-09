@@ -50,6 +50,7 @@ const CandidateCard = ({ user, sendDataToParent }: CandidateCardProps) => {
         email: '',
         company: '',
         bio: '',
+        url: ''
       });
 
     //Calls the Github API call to retrieve user information based on username:
@@ -67,7 +68,8 @@ const CandidateCard = ({ user, sendDataToParent }: CandidateCardProps) => {
                 location: data.location || '',
                 email: data.email || '',
                 company: data.company || '',
-                bio: data.bio ||'',
+                bio: data.bio || '',
+                url: data.html_url || ''
             }
             // console.log('current candidate', candidate)
             setCurrentCandidate(candidate); 
@@ -79,7 +81,7 @@ const CandidateCard = ({ user, sendDataToParent }: CandidateCardProps) => {
     //Automically calls the user information retrieval function:
     useEffect(() => {
         if (!user) {
-            console.log ('No initial candidate to render');
+            // console.log ('No initial candidate to render');
             return;
         }
         searchCandidateByUser(user); // Pass the `user` prop as the username
@@ -99,6 +101,7 @@ const CandidateCard = ({ user, sendDataToParent }: CandidateCardProps) => {
                 {currentCandidate ? <p style = {styles.p}>Location: {currentCandidate.location}</p> : null}
                 {currentCandidate ? <p style = {styles.p}>Email: {currentCandidate.email}</p> : null}
                 {currentCandidate ? <p style = {styles.p}>Company: {currentCandidate.company}</p> : null}
+                {currentCandidate ? <a style = {styles.p} href={currentCandidate.url || '#'} target="_blank">GitHub</a> : null}
                 {currentCandidate ? <p style = {styles.p}>Bio: {currentCandidate.bio}</p> : null}
             </div>
         </div>
