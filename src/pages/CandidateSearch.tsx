@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import { searchGithub, searchGithubUser } from '../api/API';
 import SearchCandidate from '../components/SearchCandidate';
 
 const styles = {

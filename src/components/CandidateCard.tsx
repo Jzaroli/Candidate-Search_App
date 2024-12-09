@@ -52,15 +52,15 @@ const CandidateCard = ({ user, sendDataToParent }: CandidateCardProps) => {
         bio: '',
       });
 
-      const searchCandidateByUser = async (username: string) => {
+    //Calls the Github API call to retrieve user information based on username:
+    const searchCandidateByUser = async (username: string) => {
         try {
             if (!username) {
                 console.error('No username provided to search');
                 return;
             }
-            const data: Candidate = await searchGithubUser(username); // Fetch data
-            console.log('Fetched user:', data);
-
+            const data = await searchGithubUser(username);
+            // console.log('Fetched user:', data);
             const candidate: Candidate ={
                 login: data.login || '',
                 avatar_url: data.avatar_url || '',
@@ -69,19 +69,19 @@ const CandidateCard = ({ user, sendDataToParent }: CandidateCardProps) => {
                 company: data.company || '',
                 bio: data.bio ||'',
             }
-            console.log('current candidate', candidate)
-            setCurrentCandidate(candidate); // Update the state with the fetched candidate
+            // console.log('current candidate', candidate)
+            setCurrentCandidate(candidate); 
         } catch (error) {
             console.error('Error fetching user:', error);
         }
       };
 
+    //Automically calls the user information retrieval function:
     useEffect(() => {
-        // if (user) {
             searchCandidateByUser(user); // Pass the `user` prop as the username
-        // }
     }, [user]);
 
+    //Sends user information back to parent
     useEffect(() => {
         sendDataToParent(currentCandidate);
       }, [currentCandidate]);
@@ -103,12 +103,3 @@ const CandidateCard = ({ user, sendDataToParent }: CandidateCardProps) => {
 }
 
 export default CandidateCard;
-
-// {user ? <p>{user} in the p tag</p> : null}
-
-// {/* <button
-//                 onClick={(event: FormEvent) =>
-//                     searchCandidateByUser(event, user)}
-//                 >
-//                 Submit2
-//                 </button> */}
