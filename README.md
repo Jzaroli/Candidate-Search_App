@@ -10,7 +10,7 @@ Screenshot:
 You can access the app at the link shared above or use the code base on your local machine!
 
 ## Technical Features
-This app uses TypesScript, React.js and the GitHub API to pull users for review as potential engineering candidates. API information: https://docs.github.com/en/rest?apiVersion=2022-11-28
+This app uses TypesScript, React.js, Bootstrap and the GitHub API to pull users for review as potential engineering candidates. API information: https://docs.github.com/en/rest?apiVersion=2022-11-28
 
 A random user is first found, then this information is passed down to a child component using a second, different API call to return that user's information. This information is passed back up to the parent component which can then be added to local storage using the + button. The information in local storage is passed to the Potential Candidates page for review. From there, the reject button allows users to remove candidates from local storage, one by one. 
 
