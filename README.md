@@ -1,7 +1,7 @@
 # Candidate-Search_App
 
 ## Description
-Think of this app as Tinder for prospective engineering candidates where you can scroll and click for users on GitHub. You may access it here: https://candidate-search-app-ryre.onrender.com/
+Think of this app as Tinder for prospective engineering candidates where you can review, save and pass on users from GitHub. You may access it here: https://candidate-search-app-ryre.onrender.com/
 
 ## Usage
 Screenshot:  
